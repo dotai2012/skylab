@@ -8,7 +8,9 @@ import {
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
-import { Root as NativeBaseRoot } from 'native-base';
+import {
+  Root as NativeBaseRoot,
+} from 'native-base';
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';

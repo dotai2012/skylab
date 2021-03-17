@@ -24,7 +24,6 @@ import {
   CameraCapturedPicture,
 } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
-
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   AddAlbumAction,
@@ -38,6 +37,7 @@ import {
 } from '../services/utils';
 import { makeStyles } from '../services/theme';
 import TakePhoto from '../components/TakePhoto';
+import Menu from '../components/Menu';
 
 const selector: RootStateSelector<'albums'> = ({ albums }) => ({ albums });
 
@@ -135,6 +135,7 @@ const Album = (): ReactElement => {
 
     return (
       <Container style={{ marginTop: insets.top, marginBottom: insets.bottom }}>
+        <Menu />
         <FlatList
           data={albums}
           renderItem={renderAlbums}
