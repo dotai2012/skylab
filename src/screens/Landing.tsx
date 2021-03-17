@@ -12,6 +12,7 @@ import {
   H3,
 } from 'native-base';
 import {
+  Alert,
   Image,
 } from 'react-native';
 
@@ -101,7 +102,7 @@ const Landing = (): ReactElement => {
     if (status === 'granted') {
       setIsShowModal(true);
     } else {
-      alert('Media permission is denied. Please go to your phone setting and enable it again');
+      Alert.alert('Media permission is denied. Please go to your phone setting and enable it again');
     }
   };
 

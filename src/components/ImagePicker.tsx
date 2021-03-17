@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface Props {
-  onSelect: (data: Data[]) => void | Promise<void>;
+  onSelect: (data: Data[]) => any;
   setIsShowModal: Dispatch<SetStateAction<boolean>>;
 }
 

@@ -15,7 +15,7 @@ class AlbumController {
   static* addAlbum({ photos }: AddAlbumAction): SagaIterator {
     const payload = {
       id: uuidv4(),
-      name: dayjs().format('DD-MM-YYYY'),
+      name: dayjs().format('dddd DD-MM-YYYY'),
       photos,
     };
     return yield put<AddAlbumActionSuccess>({ type: AlbumType.ADD_ALBUM_SUCCESS, payload });

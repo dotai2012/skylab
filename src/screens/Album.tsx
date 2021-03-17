@@ -1,6 +1,5 @@
 import React, {
   ReactElement,
-  useRef,
   useState,
 } from 'react';
 import {
@@ -9,22 +8,36 @@ import {
   FlatList,
   ListRenderItem,
   View,
+  Alert,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 import {
   Button,
   Container,
   Icon,
 } from 'native-base';
-import { Camera } from 'expo-camera';
+import {
+  Camera,
+  CameraCapturedPicture,
+} from 'expo-camera';
+import * as MediaLibrary from 'expo-media-library';
 
-import { AlbumPayload } from '../actions/album.type';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  AddAlbumAction,
+  AlbumPayload,
+  AlbumType,
+} from '../actions/album.type';
 import { RootStateSelector } from '../reducers';
 import {
   LookUp,
   Unpacked,
 } from '../services/utils';
 import { makeStyles } from '../services/theme';
+import TakePhoto from '../components/TakePhoto';
 
 const selector: RootStateSelector<'albums'> = ({ albums }) => ({ albums });
 
@@ -60,19 +73,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Album = (): ReactElement => {
-  const cameraRef = useRef<Camera>(null);
+  const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
   const [useCamera, setUseCamera] = useState(false);
   const styles = useStyles();
   const { albums } = useSelector(selector);
+
+  const onSavePhoto = async (photo: CameraCapturedPicture): Promise<void> => {
+    try {
+      await MediaLibrary.saveToLibraryAsync(photo.uri);
+      dispatch<AddAlbumAction>({
+        type: AlbumType.ADD_ALBUM,
+        photos: [photo.uri],
+      });
+      setUseCamera(false);
+    } catch (e) {
+      console.error(e);
+      Alert.alert('Failed to save the photo');
+    }
+  };
 
   const onSelectCamera = async (): Promise<void> => {
     const { status } = await Camera.requestPermissionsAsync();
 
     if (status === 'granted') {
       setUseCamera(true);
-      // const photo = await cameraRef.current?.takePictureAsync();
     } else {
-      alert('Camera permission is denied. Please go to your phone setting and enable it again');
+      Alert.alert('Camera permission is denied. Please go to your phone setting and enable it again');
     }
   };
 
@@ -102,15 +129,12 @@ const Album = (): ReactElement => {
   const renderCamera = (): ReactElement => {
     if (useCamera) {
       return (
-        <Camera
-          style={styles.cameraContainer}
-          ref={cameraRef}
-        />
+        <TakePhoto onSave={onSavePhoto} />
       );
     }
 
     return (
-      <Container>
+      <Container style={{ marginTop: insets.top, marginBottom: insets.bottom }}>
         <FlatList
           data={albums}
           renderItem={renderAlbums}

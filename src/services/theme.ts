@@ -9,6 +9,9 @@ const themeConfig = {
     primary: '#373761',
     text: '#737373',
   },
+  flexBox: {
+    flex: 1,
+  },
 };
 
 type Theme = typeof themeConfig;
