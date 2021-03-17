@@ -5,6 +5,7 @@ import { AlbumType } from '../actions/album.type';
 
 function* rootSaga(): SagaIterator {
   yield takeLatest(AlbumType.ADD_ALBUM, AlbumController.addAlbum);
+  yield takeLatest(AlbumType.ADD_PHOTO, AlbumController.addPhoto);
 }
 
 export default rootSaga;

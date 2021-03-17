@@ -26,7 +26,7 @@ import {
 import * as MediaLibrary from 'expo-media-library';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  AddAlbumAction,
+  AddPhotoAction,
   AlbumPayload,
   AlbumType,
 } from '../actions/album.type';
@@ -44,9 +44,10 @@ const selector: RootStateSelector<'albums'> = ({ albums }) => ({ albums });
 const useStyles = makeStyles((theme) => ({
   album: {
     color: theme.color.text,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 50,
+    marginTop: 25,
     marginBottom: 25,
   },
   image: {
@@ -82,9 +83,9 @@ const Album = (): ReactElement => {
   const onSavePhoto = async (photo: CameraCapturedPicture): Promise<void> => {
     try {
       await MediaLibrary.saveToLibraryAsync(photo.uri);
-      dispatch<AddAlbumAction>({
-        type: AlbumType.ADD_ALBUM,
-        photos: [photo.uri],
+      dispatch<AddPhotoAction>({
+        type: AlbumType.ADD_PHOTO,
+        photo: photo.uri,
       });
       setUseCamera(false);
     } catch (e) {

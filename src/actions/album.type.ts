@@ -2,13 +2,12 @@ import {
   SagaAction,
   Action,
 } from '../services/utils';
-import { Data } from '../components/ImagePicker';
 
 enum AlbumType {
   ADD_ALBUM = 'ADD_ALBUM',
   ADD_ALBUM_SUCCESS = 'ADD_ALBUM_SUCCESS',
-  DELETE_PHOTO = 'DELETE_ALBUM',
-  DELETE_PHOTO_SUCCESS = 'DELETE_ALBUM_SUCCESS',
+  ADD_PHOTO = 'ADD_PHOTO',
+  ADD_PHOTO_SUCCESS = 'ADD_PHOTO_SUCCESS',
 }
 
 interface AlbumPayload {
@@ -17,17 +16,22 @@ interface AlbumPayload {
   photos: string[];
 }
 
+interface PhotoPayload {
+  photo: string;
+}
+
 type AddAlbumAction = SagaAction<AlbumType.ADD_ALBUM, Pick<AlbumPayload, 'photos'>>;
-type DeletePhotoAction = SagaAction<AlbumType.DELETE_PHOTO, string[]>;
+type AddPhotoAction = SagaAction<AlbumType.ADD_PHOTO, PhotoPayload>;
 
 type AddAlbumActionSuccess = Action<AlbumType.ADD_ALBUM_SUCCESS, AlbumPayload>;
-type DeletePhotoActionSuccess = Action<AlbumType.DELETE_PHOTO_SUCCESS, Pick<AlbumPayload, 'id' | 'photos'>>;
+type AddPhotoActionSuccess = Action<AlbumType.ADD_PHOTO_SUCCESS, PhotoPayload>;
 
 export {
+  PhotoPayload,
   AlbumType,
   AlbumPayload,
   AddAlbumAction,
-  DeletePhotoAction,
+  AddPhotoAction,
   AddAlbumActionSuccess,
-  DeletePhotoActionSuccess,
+  AddPhotoActionSuccess,
 };

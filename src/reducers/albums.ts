@@ -1,13 +1,12 @@
-import _ from 'lodash';
 import produce from 'immer';
 import {
   AlbumType,
-  DeletePhotoActionSuccess,
   AlbumPayload,
   AddAlbumActionSuccess,
+  AddPhotoActionSuccess,
 } from '../actions/album.type';
 
-type AlbumAction = AddAlbumActionSuccess | DeletePhotoActionSuccess;
+type AlbumAction = AddAlbumActionSuccess | AddPhotoActionSuccess;
 
 const defaultState: AlbumPayload[] = [];
 
@@ -16,9 +15,10 @@ const albums = produce((state: AlbumPayload[], action: AlbumAction): AlbumPayloa
     case AlbumType.ADD_ALBUM_SUCCESS:
       state.unshift(action.payload);
       break;
-    // case AlbumType.DELETE_PHOTO_SUCCESS:
-    //   _.remove(state, ({ id }) => id === action.payload.id);
-    //   break;
+    case AlbumType.ADD_PHOTO_SUCCESS:
+      console.log('Hello');
+      state[0].photos.unshift(action.payload.photo);
+      break;
     default:
       break;
   }

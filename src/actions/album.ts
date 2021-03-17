@@ -6,24 +6,24 @@ import dayjs from 'dayjs';
 import {
   AlbumType,
   AddAlbumAction,
-  DeletePhotoAction,
   AddAlbumActionSuccess,
-  DeletePhotoActionSuccess,
+  AddPhotoAction,
+  AddPhotoActionSuccess,
 } from './album.type';
 
 class AlbumController {
   static* addAlbum({ photos }: AddAlbumAction): SagaIterator {
     const payload = {
       id: uuidv4(),
-      name: dayjs().format('dddd DD-MM-YYYY'),
+      name: `New Album ${dayjs().format('mm:HH DD-MM-YYYY')}`,
       photos,
     };
     return yield put<AddAlbumActionSuccess>({ type: AlbumType.ADD_ALBUM_SUCCESS, payload });
   }
 
-  // static* deleteAlbum(payload: DeleteAlbumAction): SagaIterator {
-  //   return yield put<DeleteAlbumActionSuccess>({ type: AlbumType.DELETE_WATCH_SUCCESS, payload });
-  // }
+  static* addPhoto(payload: AddPhotoAction): SagaIterator {
+    return yield put<AddPhotoActionSuccess>({ type: AlbumType.ADD_PHOTO_SUCCESS, payload });
+  }
 }
 
 export default AlbumController;

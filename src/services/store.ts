@@ -20,9 +20,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import reducers from '../reducers';
 import rootSaga from './saga';
 
-// TODO: Delete this
-AsyncStorage.clear();
-
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
