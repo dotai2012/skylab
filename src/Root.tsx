@@ -34,8 +34,8 @@ const onLoad = async (): Promise<void> => {
   });
 };
 
-const onLoadError = (error: Error): void => {
-  console.warn(error);
+const onLoadError = (e: Error): void => {
+  console.error(e);
 };
 
 const Root = (): ReactElement => {

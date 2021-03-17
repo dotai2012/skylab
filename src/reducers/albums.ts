@@ -16,7 +16,6 @@ const albums = produce((state: AlbumPayload[], action: AlbumAction): AlbumPayloa
       state.unshift(action.payload);
       break;
     case AlbumType.ADD_PHOTO_SUCCESS:
-      console.log('Hello');
       state[0].photos.unshift(action.payload.photo);
       break;
     default:
